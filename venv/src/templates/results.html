@@ -1,0 +1,53 @@
+<html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+        <div class="d-flex justify-content-center">
+        <h1><a href="/">Stripmine</a></h1>
+        <form action="/results/" method="post" name="form">
+            <input type="text" name="name" id="name" value="{{ keyword }}"/>
+            <select name="options" id="options">
+                <option value="And" {% if 'And' in options %}selected{% endif %}>Both claims and evidence</option>
+                <option value="Claim" {% if 'Claim' in options %}selected{% endif %}>Only claims</option>
+                <option value="Evidence" {% if 'Evidence' in options %}selected{% endif %}>Only evidence</option>
+            </select>
+            <input type="submit" name="submit" id="submit"/>
+        </form>
+
+        </div>
+
+        <div id="accordion">
+            {% for i in range(0, len) %}
+            <div class="card">
+                <div class="card-header" id="heading{{ i }}">
+                    <h5 class="mb-0">
+                        {% if 'claim' in values[i].type %}<span class="badge badge-success">Claim</span>{% endif %}
+                        {% if 'evidence' in values[i].type %}<span class="badge badge-primary">Evidence</span>{% endif %}
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ i }}" aria-expanded="true" aria-controls="collapse{{ i }}">
+                            {{ values[i].text }}
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapse{{ i }}" class="collapse" aria-labelledby="heading{{ i }}" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>Type: {{ values[i].type }}</p>
+                        <p>ID: {{ values[i].id }}</p>
+                        <p>ParentID: {{ values[i].parentid }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>
+
+
+
+</html>

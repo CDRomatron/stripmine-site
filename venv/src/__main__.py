@@ -74,7 +74,7 @@ def download(id):
     body = {
         "query": {
             "query_string": {
-                "fields": ["id"],
+                "fields": ["metadata.core.id"],
                 "query": id
             }
         }
@@ -87,7 +87,7 @@ def download(id):
         output['edges'] = []
         return jsonify(output)
     else:
-        abort(404, descrption="Document not found")
+        abort(404, description="Document not found")
 
 app.errorhandler(404)
 def notfound(e):
